@@ -1,6 +1,18 @@
-import React from 'react'
+"use client"
+import Link from 'next/link'
+import { useForm } from 'react-hook-form'
+
 
 export default function RegisterPage() {
+
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm()
+
+  const handleregonSubmit = (data) => console.log(data)
   return (
     <div className="min-h-screen bg-[#F3F3F3] flex items-center justify-center p-4">
       
@@ -14,7 +26,7 @@ export default function RegisterPage() {
 
         <hr className="border-gray-200 mb-6" />
 
-        <form className="space-y-4">
+        <form onSubmit={handleSubmit(handleregonSubmit)} className="space-y-4">
 
           {/* Name */}
           <div className="space-y-2">
@@ -25,8 +37,9 @@ export default function RegisterPage() {
               type="text"
               placeholder="Enter your name"
               className="w-full bg-[#F3F3F3] rounded-md py-3 px-4 text-sm focus:ring-2 focus:ring-gray-400 outline-none"
-              required
+              {...register("name", { required: "User name Requird" })}
             />
+            {errors.name && <span className="text-red-500">{errors.name.message}</span>}
           </div>
 
           {/* Photo URL */}
@@ -38,6 +51,8 @@ export default function RegisterPage() {
               type="text"
               placeholder="Enter your photo URL"
               className="w-full bg-[#F3F3F3] rounded-md py-3 px-4 text-sm focus:ring-2 focus:ring-gray-400 outline-none"
+              {...register("url")}
+            
             />
           </div>
 
@@ -50,8 +65,10 @@ export default function RegisterPage() {
               type="email"
               placeholder="Enter your email"
               className="w-full bg-[#F3F3F3] rounded-md py-3 px-4 text-sm focus:ring-2 focus:ring-gray-400 outline-none"
-              required
+             {...register("email", { required: "Email must Requird" })}
+            
             />
+            {errors.email && <span className="text-red-500">{errors.email.message}</span>}
           </div>
 
           {/* Password */}
@@ -63,8 +80,9 @@ export default function RegisterPage() {
               type="password"
               placeholder="Enter your password"
               className="w-full bg-[#F3F3F3] rounded-md py-3 px-4 text-sm focus:ring-2 focus:ring-gray-400 outline-none"
-              required
+             {...register("password", { required: "Password must Requird" })}
             />
+            {errors.password && <span className="text-red-500">{errors.password.message}</span>}
           </div>
 
           {/* Terms */}
@@ -73,9 +91,13 @@ export default function RegisterPage() {
               type="checkbox" 
               id="terms"
               className="w-4 h-4 accent-[#403F3F] cursor-pointer"
+
+              {...register("checkbox", { required: "Please Select Terms & Conditions" })}
             />
+            {errors.checkbox && <span className="text-red-500">{errors.checkbox.message}</span>}
+            <br />
             <label htmlFor="terms" className="text-sm text-[#706F6F]">
-              Accept <span className="font-semibold text-[#403F3F]">Terms & Conditions</span>
+              Accept <p className="font-semibold text-[#403F3F]">Terms & Conditions</p>
             </label>
           </div>
 
@@ -88,6 +110,11 @@ export default function RegisterPage() {
           </button>
 
         </form>
+         <Link href="/login">
+            <span className="text-[#F75B5F] hover:underline text-center cursor-pointer">
+              Login
+            </span>
+          </Link>
       </div>
     </div>
   )

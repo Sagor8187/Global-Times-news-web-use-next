@@ -1,6 +1,17 @@
+"use client"
 import Link from "next/link";
+import { useForm } from "react-hook-form";
 
 export default function LoginPage() {
+
+    const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm()
+  
+  const handlelogonSubmit = (data) => console.log(data)
   return (
     <div className="bg-[#F3F3F3] flex items-center justify-center min-h-screen p-4">
       
@@ -14,7 +25,7 @@ export default function LoginPage() {
 
         <hr className="border-gray-200 mb-6" />
 
-        <form className="space-y-4">
+        <form onSubmit={handleSubmit(handlelogonSubmit)} className="space-y-4">
           
           {/* Email */}
           <div className="space-y-2">
@@ -25,8 +36,10 @@ export default function LoginPage() {
               type="email"
               placeholder="Enter your email"
               className="w-full bg-[#F3F3F3] rounded-md py-3 px-4 text-sm focus:ring-2 focus:ring-gray-400 outline-none"
-              required
+                 {...register("email",{required:"Email must requird"})}
+                
             />
+             {errors.email && <span className="text-red-500">{errors.email.message}</span>}
           </div>
 
           {/* Password */}
@@ -38,8 +51,9 @@ export default function LoginPage() {
               type="password"
               placeholder="Enter your password"
               className="w-full bg-[#F3F3F3] rounded-md py-3 px-4 text-sm focus:ring-2 focus:ring-gray-400 outline-none"
-              required
+               {...register("password",{required:"password must requird"})}
             />
+            {errors.password && <span className="text-red-500">{errors.password.message}</span>}
           </div>
 
           {/* Button */}
