@@ -1,3 +1,5 @@
+import Navlink from "./Navlink";
+
 export default function Navbar() {
   return (
     <div>
@@ -10,18 +12,18 @@ export default function Navbar() {
       <ul
         tabIndex="-1"
         className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
-        <li><a>Home</a></li>
-        <li><a>About</a></li>
-        <li><a>Career</a></li>
+          <Navlink href={"/"}>Home</Navlink>
+    <Navlink href={"/about"}>About</Navlink>
+         <Navlink href={"/career"}>Career</Navlink>
       </ul>
     </div>
     <a className="btn btn-ghost text-xl"></a>
   </div>
   <div className="navbar-center hidden lg:flex">
-    <ul className="menu menu-horizontal px-1 text-gray-500 font-bold">
-     <li><a>Home</a></li>
-        <li><a>About</a></li>
-        <li><a>Career</a></li>
+    <ul className="menu menu-horizontal px-1 text-gray-500 font-bold flex gap-5">
+        <Navlink href={"/"}>Home</Navlink>
+    <Navlink href={"/about"}>About</Navlink>
+         <Navlink href={"/career"}>Career</Navlink>
     </ul>
   </div>
   <div className="navbar-end flex gap-3">
@@ -31,7 +33,7 @@ export default function Navbar() {
             src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
         </div>
 
-    <a className="btn">Login</a>
+    <button className="btn"><Navlink href={"/login"} >Login</Navlink></button>
   </div>
 </div>
     </div>

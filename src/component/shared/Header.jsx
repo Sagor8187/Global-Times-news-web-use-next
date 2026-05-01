@@ -1,6 +1,7 @@
 import Image from "next/image";
 import logo from "@/assets/logo.png"
 import { format } from "date-fns";
+import Merque from "./Merque";
 export default function Header() {
   return (
     <div>
@@ -17,6 +18,7 @@ export default function Header() {
       </p>
       
       </div>
+      <Merque></Merque>
     </div>
   )
 }
