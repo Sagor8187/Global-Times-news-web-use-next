@@ -1,6 +1,17 @@
+"use client"
+import { authClient } from "@/lib/auth-client";
 import Navlink from "./Navlink";
+import { RxAvatar } from "react-icons/rx";
+import Image from "next/image";
 
-export default function Navbar() {
+export default  function Navbar() {
+
+
+const { data: session } =  authClient.useSession()
+const info = session?.user
+console.log(session)
+
+  
   return (
     <div>
       <div className="navbar bg-base-100 shadow-sm">
@@ -26,15 +37,27 @@ export default function Navbar() {
          <Navlink href={"/career"}>Career</Navlink>
     </ul>
   </div>
+  {info?
   <div className="navbar-end flex gap-3">
+    <h2 className="font-bold text-pink-700">Wellcome {info?.name}</h2>
     <div className="w-10 rounded-full">
-          <img className="w-10 rounded-full"
-            alt="Tailwind CSS Navbar component"
-            src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+          { <img 
+  className="rounded-full w-[40px] h-[40px] object-cover"
+  src={info?.image}
+  alt="profile"
+/>||  <RxAvatar className="w-10 h-10 rounded-full"/>}
+        </div>
+
+    <button className="btn" onClick={async()=>await authClient.signOut()}>Logout </button>
+  </div>
+  :<div className="navbar-end flex gap-3">
+    <div className="w-10 rounded-full">
+          
+           
         </div>
 
     <button className="btn"><Navlink href={"/login"} >Login</Navlink></button>
-  </div>
+  </div>}
 </div>
     </div>
   );
