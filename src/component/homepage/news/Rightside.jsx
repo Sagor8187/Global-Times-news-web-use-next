@@ -1,38 +1,55 @@
-"use client"
-import { authClient } from '@/lib/auth-client';
-import { FaGoogle, FaGithub } from 'react-icons/fa';
+"use client";
+
+import { authClient } from "@/lib/auth-client";
+import { FaGoogle, FaGithub } from "react-icons/fa";
+
 export default function Rightside() {
-
   const signIngoogle = async () => {
-  const data = await authClient.signIn.social({
-    provider: "google",
-  });
+    await authClient.signIn.social({
+      provider: "google",
+    });
+  };
 
- 
-};
- const signIngithub = async () => {
-    const data = await authClient.signIn.social({
-        provider: "github"
-    })
-}
+  const signIngithub = async () => {
+    await authClient.signIn.social({
+      provider: "github",
+    });
+  };
+
   return (
-    <div className="max-w-sm p-4">
-      {/* Title */}
-      <h2 className="text-xl font-bold text-[#333] mb-4">Login With</h2>
-
-      <div className="flex flex-col gap-3">
-        {/* Google Login Button */}
-        <button onClick={()=>signIngoogle()} className="flex items-center justify-center gap-2 w-full py-2.5 px-4 border border-blue-500 rounded-md text-blue-500 hover:bg-blue-50 transition-colors font-medium">
-          <FaGoogle className="text-lg" />
-          <span>Login with Google</span>
-        </button>
-
-        {/* Github Login Button */}
-        <button onClick={()=>signIngithub()} className="flex items-center justify-center gap-2 w-full py-2.5 px-4 border border-gray-800 rounded-md text-gray-800 hover:bg-gray-50 transition-colors font-medium">
-          <FaGithub className="text-xl" />
-          <span>Login with Github</span>
-        </button>
+    <div className="w-full max-w-sm bg-white border border-gray-100 rounded-xl p-5 shadow-sm">
+      
+      {/* PREMIUM SECTION HEADER */}
+      <div className="flex items-center gap-2 mb-5 pb-3 border-b border-gray-100">
+        <span className="w-1.5 h-5 bg-orange-500 rounded-full"></span>
+        <h2 className="text-base font-extrabold text-slate-900 tracking-tight uppercase">
+          Login With Social
+        </h2>
       </div>
+
+      {/* SOCIAL OAUTH AUTHENTICATION BUTTON STACK */}
+      <div className="flex flex-col gap-3">
+        
+        {/* Google Authentication Trigger Button */}
+        <button
+          onClick={signIngoogle}
+          className="group flex items-center justify-center gap-3 w-full py-3 px-4 bg-white border border-gray-200 rounded-xl text-slate-700 hover:text-slate-900 hover:border-slate-300 hover:bg-slate-50 font-bold text-sm tracking-wide transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0"
+        >
+          <FaGoogle className="text-base text-red-500 group-hover:scale-110 transition-transform" />
+          <span>Continue with Google</span>
+        </button>
+
+        {/* GitHub Authentication Trigger Button */}
+        <button
+          onClick={signIngithub}
+          className="group flex items-center justify-center gap-3 w-full py-3 px-4 bg-slate-900 border border-slate-900 rounded-xl text-white hover:bg-slate-800 font-bold text-sm tracking-wide transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0 shadow-sm shadow-slate-900/10"
+        >
+          <FaGithub className="text-lg group-hover:scale-110 transition-transform" />
+          <span>Continue with GitHub</span>
+        </button>
+        
+      </div>
+      
     </div>
-  )
+  );
 }

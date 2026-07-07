@@ -1,32 +1,38 @@
-
-import Link from "next/link"
+import Link from "next/link";
 import { FaRegSadTear } from "react-icons/fa";
 
 export default function Newsnotfound() {
   return (
-    <div className="h-[60vh] flex flex-col justify-center items-center text-center">
+    <div className="min-h-[50vh] flex flex-col justify-center items-center text-center px-4 py-12 bg-white rounded-2xl border border-gray-100 shadow-sm max-w-2xl mx-auto my-6">
       
-      {/* icon */}
-      <FaRegSadTear className="text-6xl text-gray-400 mb-4" />
+      {/* Dynamic Theme Icon Frame */}
+      <div className="w-20 h-20 bg-orange-50 text-orange-500 rounded-full flex items-center justify-center mb-6 text-4xl animate-pulse">
+        <FaRegSadTear />
+      </div>
 
-      {/* title */}
-      <h2 className="text-2xl font-bold text-gray-700">
-        No News Found
+      {/* Title */}
+      <h2 className="text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight">
+        No News Available
       </h2>
 
-      {/* subtitle */}
-      <p className="text-gray-500 mt-2 max-w-md">
-        Sorry, we couldn’t find any news in this category right now.  
-        Please try another category or check back later.
+      {/* Subtitle / Description */}
+      <p className="text-gray-500 mt-3 max-w-sm text-sm md:text-base leading-relaxed">
+        We couldn’t find any articles published under this category right now. Try exploring another feed or check back later!
       </p>
 
-      {/* button */}
-      <Link href={"/"}>
-       <button className="mt-5 px-5 py-2 bg-orange-500 text-white rounded-md hover:bg-orange-600 transition">
-        Go Back
-      </button>
-      </Link>
-     
+      {/* Action Button - Global News Time Theme Color */}
+      <div className="mt-8 flex flex-col sm:flex-row gap-3 w-full justify-center px-6">
+        <Link href="/" className="w-full sm:w-auto">
+          <button className="w-full sm:w-auto bg-orange-500 hover:bg-orange-600 text-white font-bold px-6 py-2.5 rounded-xl transition shadow-sm text-sm">
+            Explore Home Feed
+          </button>
+        </Link>
+        <Link href="/about" className="w-full sm:w-auto">
+          <button className="w-full sm:w-auto border border-slate-200 hover:bg-slate-50 text-slate-700 font-medium px-6 py-2.5 rounded-xl transition text-sm">
+            Contact Support
+          </button>
+        </Link>
+      </div>
 
     </div>
   );

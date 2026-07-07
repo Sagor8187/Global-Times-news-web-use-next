@@ -1,85 +1,112 @@
-"use client"
+"use client";
+
 import { authClient } from "@/lib/auth-client";
 import Link from "next/link";
-import { useForm } from "react-hook-form";
+import { useState } from "react";
 
 export default function LoginPage() {
+  const [loading, setLoading] = useState(false);
 
-    const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm()
-  
-  const handlelogonSubmit =async (data) => {
-    const {email,password}= data
-    const { data:res, error } = await authClient.signIn.email({
-    email: email, // required
-    password:password, // required
-    rememberMe: true,
-    callbackURL:"/",
-});
+  const handlelogonSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
 
-  }
+    const formData = new FormData(e.target);
+    const email = formData.get("email");
+    const password = formData.get("password");
+
+    try {
+      const { data: res, error } = await authClient.signIn.email({
+        email: email,
+        password: password,
+        rememberMe: true,
+        callbackURL: "/",
+      });
+
+      if (error) {
+        console.error(error.message);
+      }
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
-    <div className="bg-[#F3F3F3] flex items-center justify-center min-h-screen p-4">
+    <div className="bg-slate-50 flex items-center justify-center min-h-screen p-4 font-sans">
       
-      {/* Card */}
-      <div className="bg-white w-full max-w-md p-6 md:p-8 rounded-md shadow">
+      {/* Premium Wrapped Card Panel */}
+      <div className="bg-white w-full max-w-md p-6 md:p-8 rounded-2xl shadow-xl border border-slate-100/80 transition-all">
 
-        {/* Header */}
-        <h1 className="text-2xl font-bold text-[#403F3F] text-center mb-6">
+        {/* Brand Accent Pill */}
+        <div className="flex justify-center mb-4">
+          <span className="w-12 h-1.5 bg-orange-500 rounded-full"></span>
+        </div>
+
+        {/* Header Typography */}
+        <h1 className="text-2xl md:text-3xl font-extrabold text-slate-900 text-center mb-2 tracking-tight">
           Login your account
         </h1>
+        <p className="text-xs text-gray-400 text-center mb-6 font-medium">
+          Log in to continue to Global News Time
+        </p>
 
-        <hr className="border-gray-200 mb-6" />
+        <hr className="border-slate-100 mb-6" />
 
-        <form onSubmit={handleSubmit(handlelogonSubmit)} className="space-y-4">
+        <form onSubmit={handlelogonSubmit} className="space-y-5">
           
-          {/* Email */}
-          <div className="space-y-2">
-            <label className="text-sm font-semibold text-[#403F3F]">
+          {/* Email Address Input */}
+          <div className="space-y-1.5">
+            <label className="text-xs font-bold uppercase tracking-wider text-slate-700">
               Email address
             </label>
             <input
+              name="email"
               type="email"
+              required
               placeholder="Enter your email"
-              className="w-full bg-[#F3F3F3] rounded-md py-3 px-4 text-sm focus:ring-2 focus:ring-gray-400 outline-none"
-                 {...register("email",{required:"Email must requird"})}
-                
+              className="w-full bg-slate-50 border border-slate-200 rounded-xl py-3 px-4 text-sm font-medium outline-none focus:ring-4 focus:ring-orange-100 focus:border-orange-500 transition-all text-slate-900 placeholder-gray-400"
             />
-             {errors.email && <span className="text-red-500">{errors.email.message}</span>}
           </div>
 
-          {/* Password */}
-          <div className="space-y-2">
-            <label className="text-sm font-semibold text-[#403F3F]">
+          {/* Password Input */}
+          <div className="space-y-1.5">
+            <label className="text-xs font-bold uppercase tracking-wider text-slate-700">
               Password
             </label>
             <input
+              name="password"
               type="password"
+              required
               placeholder="Enter your password"
-              className="w-full bg-[#F3F3F3] rounded-md py-3 px-4 text-sm focus:ring-2 focus:ring-gray-400 outline-none"
-               {...register("password",{required:"password must requird"})}
+              className="w-full bg-slate-50 border border-slate-200 rounded-xl py-3 px-4 text-sm font-medium outline-none focus:ring-4 focus:ring-orange-100 focus:border-orange-500 transition-all text-slate-900 placeholder-gray-400"
             />
-            {errors.password && <span className="text-red-500">{errors.password.message}</span>}
           </div>
 
-          {/* Button */}
+          {/* Premium Submission Button with Active Spinner */}
           <button
             type="submit"
-            className="w-full bg-[#403F3F] text-white font-semibold py-3 rounded-md text-sm hover:bg-[#2b2a2a]"
+            disabled={loading}
+            className="w-full h-12 bg-slate-900 hover:bg-orange-500 text-white font-bold rounded-xl text-sm transition-all duration-200 shadow-md flex items-center justify-center gap-2 disabled:bg-slate-700 disabled:cursor-not-allowed select-none mt-2"
           >
-            Login
+            {loading ? (
+              <>
+                {/* CSS Spinner Circle */}
+                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                <span>Logging in...</span>
+              </>
+            ) : (
+              <span>Login</span>
+            )}
           </button>
         </form>
 
-        {/* Footer */}
-        <p className="text-center mt-6 text-sm text-[#706F6F]">
+        {/* Footer Redirection Meta Links */}
+        <p className="text-center mt-6 text-sm text-gray-500 font-medium">
           Don't have an account?{" "}
           <Link href="/registration">
-            <span className="text-[#F75B5F] hover:underline cursor-pointer">
+            <span className="text-orange-500 font-bold hover:underline cursor-pointer pl-0.5">
               Register
             </span>
           </Link>
